@@ -1,0 +1,6 @@
+@PostalService_HostAddress = http://localhost:5196
+
+GET {{PostalService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
