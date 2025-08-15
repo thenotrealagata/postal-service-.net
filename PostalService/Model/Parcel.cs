@@ -10,13 +10,9 @@ namespace PostalService.Model
 
         [Required]
         public DateTime CreatedAt { get; set; }
-
         public DateTime PlacedAt { get; set; }
-
         public DateTime ArrivedAt { get; set; }
-
         public bool IsDeleted { get; set; }
-
         public bool IsFulfilled { get; set; }
 
         [Required]
@@ -28,10 +24,7 @@ namespace PostalService.Model
         public virtual User Sender { get; set; } = null!;
 
         [Required]
-        [ForeignKey(nameof(User))]
-        public string ReceiverId  { get; set; }
-
-        public virtual User Receiver { get; set; } = null!;
+        public string ReceiverEmail { get; set; }
 
         [ForeignKey(nameof(Location))]
         public int StartLocationid { get; set; }
@@ -44,7 +37,6 @@ namespace PostalService.Model
 
         [ForeignKey(nameof(Location))]
         public int CurrentLocationId { get; set; }
-
         public virtual Location CurrentLocation { get; set; }
     }
 }

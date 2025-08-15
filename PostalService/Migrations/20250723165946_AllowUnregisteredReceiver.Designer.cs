@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostalService;
 
@@ -11,9 +12,11 @@ using PostalService;
 namespace PostalService.Migrations
 {
     [DbContext(typeof(DbContext))]
-    partial class DbContextModelSnapshot : ModelSnapshot
+    [Migration("20250723165946_AllowUnregisteredReceiver")]
+    partial class AllowUnregisteredReceiver
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,6 +190,9 @@ namespace PostalService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ReceiverId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("SenderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -202,6 +208,8 @@ namespace PostalService.Migrations
                     b.HasIndex("CurrentLocationId");
 
                     b.HasIndex("EndLocationid");
+
+                    b.HasIndex("ReceiverId");
 
                     b.HasIndex("SenderId");
 
@@ -367,6 +375,10 @@ namespace PostalService.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PostalService.Model.User", "Receiver")
+                        .WithMany()
+                        .HasForeignKey("ReceiverId");
+
                     b.HasOne("PostalService.Model.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
@@ -382,6 +394,8 @@ namespace PostalService.Migrations
                     b.Navigation("CurrentLocation");
 
                     b.Navigation("EndLocation");
+
+                    b.Navigation("Receiver");
 
                     b.Navigation("Sender");
 

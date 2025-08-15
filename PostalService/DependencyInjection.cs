@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PostalService.Model;
 using Microsoft.EntityFrameworkCore;
+using PostalService.Services;
 
 namespace PostalService
 {
@@ -17,6 +18,7 @@ namespace PostalService
 
             // Services
             //services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IParcelService, ParcelService>();
 
             services.AddIdentity<User, UserRole>(options =>
             {

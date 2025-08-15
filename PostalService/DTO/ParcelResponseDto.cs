@@ -1,4 +1,5 @@
-﻿using PostalService.Model;
+﻿using System.ComponentModel.DataAnnotations;
+using PostalService.Model;
 
 namespace PostalService.DTO
 {
@@ -10,8 +11,8 @@ namespace PostalService.DTO
         public DateTime? ArrivedAt { get; init; }
         public bool IsFulfilled { get; init; }
         public ParcelSize ParcelSize { get; init; }
-        public int SenderId { get; init; }
-        public int ReceiverId { get; init; }
+        public string SenderEmail { get; init; }
+        public string ReceiverEmail { get; init; }
         public Location StartLocation { get; init; }
         public Location EndLocation { get; init; }
         public Location? CurrentLocation { get; init; }
