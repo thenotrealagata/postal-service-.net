@@ -203,7 +203,7 @@ namespace PostalService.Migrations
                         column: x => x.SenderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Parcels_Locations_CurrentLocationId",
                         column: x => x.CurrentLocationId,
@@ -215,13 +215,13 @@ namespace PostalService.Migrations
                         column: x => x.EndLocationid,
                         principalTable: "Locations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Parcels_Locations_StartLocationid",
                         column: x => x.StartLocationid,
                         principalTable: "Locations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

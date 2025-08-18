@@ -7,13 +7,10 @@ namespace PostalService.Model
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        public string Address { get; set; }
+        public required string Address { get; set; }
 
-        [Required]
-        public int Capacity { get; set; }
+        public required int Capacity { get; set; }
 
-        [Required]
-        public LocationType LocationType { get; init; }
+        public required LocationType LocationType { get; init; }
     }
 }

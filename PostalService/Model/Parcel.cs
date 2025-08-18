@@ -8,35 +8,29 @@ namespace PostalService.Model
         [Key]
         public int Id { get; set; }
 
-        [Required]
         public DateTime CreatedAt { get; set; }
         public DateTime PlacedAt { get; set; }
         public DateTime ArrivedAt { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsFulfilled { get; set; }
 
-        [Required]
-        public ParcelSize Size { get; set; }
+        public required ParcelSize Size { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(User))]
-        public string SenderId { get; set; }
-        public virtual User Sender { get; set; } = null!;
+        public required string SenderEmail { get; set; }
 
-        [Required]
-        public string ReceiverEmail { get; set; }
+        public required string ReceiverEmail { get; set; }
 
         [ForeignKey(nameof(Location))]
-        public int StartLocationid { get; set; }
-        public virtual Location StartLocation { get; set; }
+        public int StartLocationId { get; set; }
+        public virtual Location StartLocation { get; set; } = null!;
 
         [ForeignKey(nameof(Location))]
-        public int EndLocationid { get; set; }
-        public virtual Location EndLocation { get; set; }
+        public int EndLocationId { get; set; }
+        public virtual Location EndLocation { get; set; } = null!;
 
 
         [ForeignKey(nameof(Location))]
         public int CurrentLocationId { get; set; }
-        public virtual Location CurrentLocation { get; set; }
+        public virtual Location CurrentLocation { get; set; } = null!;
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostalService;
 
@@ -11,9 +12,11 @@ using PostalService;
 namespace PostalService.Migrations
 {
     [DbContext(typeof(DbContext))]
-    partial class DbContextModelSnapshot : ModelSnapshot
+    [Migration("20250817091340_FixRequired")]
+    partial class FixRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,9 +190,9 @@ namespace PostalService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SenderEmail")
+                    b.Property<string>("SenderId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Size")
                         .HasColumnType("int");
@@ -202,6 +205,8 @@ namespace PostalService.Migrations
                     b.HasIndex("CurrentLocationId");
 
                     b.HasIndex("EndLocationId");
+
+                    b.HasIndex("SenderId");
 
                     b.HasIndex("StartLocationId");
 
@@ -365,6 +370,12 @@ namespace PostalService.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PostalService.Model.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PostalService.Model.Location", "StartLocation")
                         .WithMany()
                         .HasForeignKey("StartLocationId")
@@ -374,6 +385,8 @@ namespace PostalService.Migrations
                     b.Navigation("CurrentLocation");
 
                     b.Navigation("EndLocation");
+
+                    b.Navigation("Sender");
 
                     b.Navigation("StartLocation");
                 });
