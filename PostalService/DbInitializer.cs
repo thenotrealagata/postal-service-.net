@@ -68,10 +68,9 @@ namespace PostalService
                     Size = ParcelSize.S,
                     SenderEmail = users[1].Email,
                     ReceiverEmail = "user1@example.com",
-
                 }
             ];
-
+            context.Parcels.AddRange(parcels);
             
             context.SaveChanges();
         }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostalService;
 
@@ -11,9 +12,11 @@ using PostalService;
 namespace PostalService.Migrations
 {
     [DbContext(typeof(DbContext))]
-    partial class DbContextModelSnapshot : ModelSnapshot
+    [Migration("20250818140817_MakeParcelLocationsNullable")]
+    partial class MakeParcelLocationsNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,7 +165,7 @@ namespace PostalService.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("ArrivedAt")
+                    b.Property<DateTime>("ArrivedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedAt")
@@ -180,7 +183,7 @@ namespace PostalService.Migrations
                     b.Property<bool>("IsFulfilled")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("PlacedAt")
+                    b.Property<DateTime>("PlacedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ReceiverEmail")
@@ -249,9 +252,6 @@ namespace PostalService.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<Guid?>("RefreshToken")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

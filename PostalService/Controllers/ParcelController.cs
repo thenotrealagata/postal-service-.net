@@ -18,9 +18,22 @@ namespace PostalService.Controllers
             _mapper = mapper;
         }
 
+        [Route("/parcels")]
+        [HttpGet]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(List<ParcelResponseDto>))]
+        public async Task<IActionResult> GetParcels()
+        {
+            var parcels = await _parcelService.GetParcelsAsync();
+            var parcelsResponse = parcels.Select(p => _mapper.Map<ParcelResponseDto>(p)).ToList();
+
+            return Ok(parcelsResponse);
+        }
+
+
         [Route("/parcels/{id}")]
         [HttpGet]
         [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(ParcelResponseDto))]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetParcelById([FromRoute] int id)
         {
             var parcel = await _parcelService.GetByIdAsync(id);

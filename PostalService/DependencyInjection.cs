@@ -19,6 +19,8 @@ namespace PostalService
             // Services
             //services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IParcelService, ParcelService>();
+            services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddIdentity<User, UserRole>(options =>
             {

@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
 using PostalService;
 
 var builder = WebApplication.CreateBuilder(args);

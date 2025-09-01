@@ -12,7 +12,19 @@ namespace PostalService.Services
         public ParcelService(DbContext context)
         {
             _context = context;
-        } 
+        }
+
+        public async Task<List<Parcel>> GetParcelsAsync()
+        {
+            var parcels = await _context.Parcels.ToListAsync();
+
+            if (parcels is null)
+            {
+                throw new ResourceNotFoundException(nameof(Parcel));
+            }
+
+            return parcels;
+        }
 
         public async Task<Parcel> GetByIdAsync(int id)
         {
