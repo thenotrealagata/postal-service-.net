@@ -15,6 +15,12 @@ namespace PostalService.Services
             _dbContext = dbContext;
             _parcelService = parcelService;
         }
+        public async Task<List<Location>> GetLocations(LocationType locationType)
+        {
+            var locations = await _dbContext.Locations.Where(l => l.LocationType == locationType).ToListAsync();
+
+            return locations;
+        }
 
         public async Task<Location> GetLocationByIdAsync(int id)
         {

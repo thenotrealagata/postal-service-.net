@@ -14,6 +14,8 @@ namespace PostalService
                 .ForSourceMember(src => src.Password, opt => opt.DoNotValidate())
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
             CreateMap<User, UserResponseDto>(MemberList.Destination);
+
+            CreateMap<Location, LocationResponseDto>(MemberList.Destination);
         }
     }
 }

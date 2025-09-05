@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PostalService.DTO;
+using PostalService.Model;
 using PostalService.Services;
 
 namespace PostalService.Controllers
@@ -17,6 +18,18 @@ namespace PostalService.Controllers
             _locationService = locationService;
             _parcelService = parcelService;
         }
+
+        [Route("/locations")]
+        [HttpGet]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(List<LocationResponseDto>))]
+        public async Task<IActionResult> GetLocations([FromQuery] LocationType locationType)
+        {
+            var locations = await _locationService.GetLocations(locationType);
+            var locationsResponse = locations.Select(l => _mapper.Map<LocationResponseDto>(l)).ToList();
+
+            return Ok(locationsResponse);
+        }
+
 
         // TODO auth only user who was creator of package/admin
         [Route("/locations/{locationId}/post/{parcelId}")]
