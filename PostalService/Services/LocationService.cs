@@ -8,12 +8,10 @@ namespace PostalService.Services
     public class LocationService : ILocationService
     {
         private DbContext _dbContext;
-        private IParcelService _parcelService;
 
-        public LocationService (DbContext dbContext, IParcelService parcelService)
+        public LocationService (DbContext dbContext)
         {
             _dbContext = dbContext;
-            _parcelService = parcelService;
         }
         public async Task<List<Location>> GetLocations(LocationType locationType)
         {
@@ -36,6 +34,8 @@ namespace PostalService.Services
 
         public async Task PostParcelAsync(int locationId, int parcelId)
         {
+            throw new NotImplementedException();
+            /*
             // Post parcel at any given location that has free capacity
             var parcel = await _parcelService.GetByIdAsync(parcelId);
             var location = await GetLocationByIdAsync(locationId);
@@ -50,12 +50,13 @@ namespace PostalService.Services
             parcel.CurrentLocationId = location.Id;
             parcel.StartLocationId = location.Id;
             parcel.PlacedAt = DateTime.Now;
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();*/
         }
 
         public async Task ReceiveParcelAsync(int parcelId)
         {
-            // Receive parcel if it has reached its end location
+            throw new NotImplementedException();
+            /*// Receive parcel if it has reached its end location
             var parcel = await _parcelService.GetByIdAsync(parcelId);
 
             if (parcel.CurrentLocationId == parcel.EndLocationId)
@@ -65,7 +66,7 @@ namespace PostalService.Services
             } else
             {
                 throw new InvalidDataException("Parcel hasn't arrived to end location yet!");
-            }
+            }*/
         }
 
         public Task MoveParcel(int parcelId, int toLocationId)

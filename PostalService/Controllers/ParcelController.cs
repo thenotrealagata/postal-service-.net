@@ -1,5 +1,6 @@
 ﻿using System.Net.WebSockets;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostalService.DTO;
 using PostalService.Model;
@@ -18,12 +19,25 @@ namespace PostalService.Controllers
             _mapper = mapper;
         }
 
-        [Route("/parcels")]
+        [Authorize]
+        [Route("/parcels/received")]
         [HttpGet]
         [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(List<ParcelResponseDto>))]
-        public async Task<IActionResult> GetParcels()
+        public async Task<IActionResult> GetReceivedParcels()
         {
-            var parcels = await _parcelService.GetParcelsAsync();
+            var parcels = await _parcelService.GetReceivedParcelsAsync();
+            var parcelsResponse = parcels.Select(p => _mapper.Map<ParcelResponseDto>(p)).ToList();
+
+            return Ok(parcelsResponse);
+        }
+
+        [Authorize]
+        [Route("/parcels/created")]
+        [HttpGet]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(List<ParcelResponseDto>))]
+        public async Task<IActionResult> GetCreatedParcels()
+        {
+            var parcels = await _parcelService.GetCreatedParcelsAsync();
             var parcelsResponse = parcels.Select(p => _mapper.Map<ParcelResponseDto>(p)).ToList();
 
             return Ok(parcelsResponse);

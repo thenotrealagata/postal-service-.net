@@ -20,6 +20,8 @@ namespace PostalService
             {
                 ResourceNotFoundException => await CreateProblemDetails(httpContext, exception,
                     StatusCodes.Status404NotFound),
+                AccessViolationException => await CreateProblemDetails(httpContext, exception,
+                    StatusCodes.Status403Forbidden),
                 ArgumentOutOfRangeException => await CreateProblemDetails(httpContext, exception,
                     StatusCodes.Status400BadRequest),
                 ArgumentNullException => await CreateProblemDetails(httpContext, exception,

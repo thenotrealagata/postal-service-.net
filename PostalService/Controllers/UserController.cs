@@ -17,7 +17,7 @@ namespace PostalService.Controllers
             _mapper = mapper;
         }
 
-        [Route("/users")]
+        [Route("/register")]
         [HttpPost]
         [ProducesResponseType(statusCode: StatusCodes.Status201Created, type: typeof(UserResponseDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -27,14 +27,14 @@ namespace PostalService.Controllers
             var user = _mapper.Map<User>(userRequestDto);
             await _userService.AddUserAsync(user, userRequestDto.Password);
 
-            var result = _mapper.Map<User>(user);
+            var result = _mapper.Map<UserResponseDto>(user);
 
             return CreatedAtAction(nameof(CreateUser), result);
         }
 
         [HttpPost]
-        [Route("login")]
-        [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(UserResponseDto))]
+        [Route("/login")]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(LoginResponseDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Login([FromBody] UserRequestDto loginRequestDto)
@@ -52,8 +52,8 @@ namespace PostalService.Controllers
         }
 
         [HttpPost]
-        [Route("refresh")]
-        [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(UserResponseDto))]
+        [Route("/refresh")]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(LoginResponseDto))]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> RedeemRefreshToken([FromBody] string refreshToken)
         {
