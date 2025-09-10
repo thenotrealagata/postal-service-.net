@@ -64,6 +64,8 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
 var app = builder.Build();
 
 var mapper = app.Services.GetService<IMapper>();

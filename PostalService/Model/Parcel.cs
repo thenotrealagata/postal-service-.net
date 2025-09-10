@@ -32,5 +32,9 @@ namespace PostalService.Model
         [ForeignKey(nameof(Location))]
         public int? CurrentLocationId { get; set; }
         public virtual Location CurrentLocation { get; set; } = null!;
+
+        public string? SenderAccessCode { get; set; }
+
+        public string? ReceiverAccessCode { get; set; }
     }
 }

@@ -56,13 +56,45 @@ namespace PostalService.Controllers
             return Ok(parcel);
         }
 
+        [Route("/parcels/")]
+        [HttpGet]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(ParcelResponseDto))]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetParcelWithAccessCode([FromQuery] string email, [FromQuery] string accessCode)
+        {
+            var parcel = await _parcelService.GetByAccessCodeAsync(email, accessCode);
+            var parcelResponse = _mapper.Map<ParcelResponseDto>(parcel);
+
+            return Ok(parcel);
+        }
+
+        [Route("/parcels/{id}/post")]
+        [HttpPatch]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(ParcelResponseDto))]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> PostParcel([FromRoute] int id)
+        {
+            var parcel = await _parcelService.PostParcelAsync(id);
+            return Ok(parcel);
+        }
+
+        [Route("/parcels/{id}/receive")]
+        [HttpPatch]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(ParcelResponseDto))]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ReceiveParcel([FromRoute] int id)
+        {
+            var parcel = await _parcelService.ReceiveParcelAsync(id);
+            return Ok(parcel);
+        }
+
         [Route("/parcels")]
         [HttpPost]
         [ProducesResponseType(statusCode: StatusCodes.Status201Created, type: typeof(ParcelResponseDto))]
         public async Task<IActionResult> CreateParcel([FromBody] ParcelRequestDto parcelRequestDto)
         {
             var parcel = _mapper.Map<Parcel>(parcelRequestDto);
-            await _parcelService.CreateParcel(parcel);
+            await _parcelService.CreateParcelAsync(parcel);
 
             var parcelResponse = _mapper.Map<ParcelResponseDto>(parcel);
 
